@@ -52,7 +52,7 @@ def change_title(Nmae):
     root.title(f'{Nmae[j + 1:]}')
 
 #Create anew file function
-def new_file():
+def new_file(e=None):
     # delete previous text
     my_text.delete('1.0',END)
     root.title('New File')
@@ -60,14 +60,15 @@ def new_file():
     status_bar.config(text='New file        ')
     open_status_name=False
 
-def open_file():
+def open_file(e=None):
     # delete previous text
     my_text.delete("1.0",END)
 
     #Grab file name
     text_file=filedialog.askopenfilename(initialdir="C:\\Users",title="Open File",
     filetypes=(("Text Files","*.txt"),("Python Files","*.py"),("HTML Files","*.html"),("All Files","*.*")))
-
+    if(len(text_file)==0):
+        return
     #check to see if there is a file name
     if text_file:
         global open_status_name
@@ -86,7 +87,7 @@ def open_file():
     text_file.close()
 
 # Save As file
-def save_as_file():
+def save_as_file(e=None):
     text_file=filedialog.asksaveasfilename(defaultextension=".*",initialdir="C:\\Users",title="Save File",
     filetypes=(("Text Files","*.txt"),("Python Files","*.py"),("HTML Files","*.html"),("All Files","*.*")))
 
@@ -102,7 +103,7 @@ def save_as_file():
         text_file.close()
 
 #save file
-def save_file():
+def save_file(e=None):
     global open_status_name
     if open_status_name:
         #save the file
@@ -114,7 +115,7 @@ def save_file():
     else:
         save_as_file()
 
-def cut_text(e):
+def cut_text(e=None):
     global selected
     if e:
         selected=root.clipboard_get()
@@ -127,7 +128,7 @@ def cut_text(e):
             root.clipboard_clear()  # to clear all text from clipborad
             root.clipboard_append(selected)
 
-def copy_text(e):
+def copy_text(e=None):
     global selected
     if e:
         selected=root.clipboard_get()# copy all selected text to clipboard
@@ -138,7 +139,7 @@ def copy_text(e):
         root.clipboard_clear()# to clear all text from clipborad
         root.clipboard_append(selected)# to add selected text to clipboard to that when we use ctrl+v we only paste what we had selected
 
-def paste_text(e):
+def paste_text(e=None):
     global selected
     if e:# to check that we use keyboard shortcut ,if yes then enter the if
         selected=root.clipboard_get()
@@ -297,7 +298,7 @@ if __name__ == '__main__':
     hor_scroll.pack(side=BOTTOM,fill=X)
 
     # create Text box
-    my_text = Text(my_frame, width=110, height=100, font=our_font, selectbackground="#0147FA",
+    my_text = Text(my_frame, width=100, height=25, font=our_font, selectbackground="#0147FA",
                    selectforeground="white", undo=True, yscrollcommand=text_scroll.set,wrap="none",xscrollcommand=hor_scroll.set)
     my_text.pack()
 
@@ -316,7 +317,7 @@ if __name__ == '__main__':
     file_menu.add_command(label="New",image=new_icon,compound="left", accelerator="Ctrl+N", command=new_file)
     file_menu.add_command(label="Open", image=open_icon,compound="left", accelerator="Ctrl+O",command=open_file)
     file_menu.add_command(label="Save", image=save_icon,compound="left",accelerator="Ctrl+S",command=save_file)
-    file_menu.add_command(label="Save As", image=save_as_icon,compound="left",accelerator="Ctrl+Alt+S",command=save_as_file)
+    file_menu.add_command(label="Save As", image=save_as_icon,compound="left",command=save_as_file)
     file_menu.add_separator()
     file_menu.add_command(label="Exit", image=exit_icon,compound="left",accelerator="Ctrl+Q",command=root.quit)
 
@@ -344,22 +345,20 @@ if __name__ == '__main__':
     color_menu.add_command(label="Background", command=bg_color)
 
     #add status bar to bottom of app
-    status_bar=Label(root,text="Ready       ",anchor=E)
-    status_bar.pack(fill=X,side=BOTTOM,ipady=15)
+    status_bar=Label(root,text="Ready      ",bd=1,relief=SUNKEN ,anchor=E)
+    status_bar.pack(side=BOTTOM,fill=X)
 
     #edit bindings
     root.bind('<Control-x>',cut_text)
     root.bind('<Control-c>',copy_text)
     root.bind('<Control-v>',paste_text)
     #select bind
-    root.bind('<Control-A>',select_all)
     root.bind('<Control-a>',select_all)
 
     #file bind
     root.bind('<Control-n>',new_file)
     root.bind('<Control-o>',open_file)
     root.bind('<Control-s>',save_file)
-    root.bind('<Control-Alt-s>',save_as_file)
 
     font_tuple = font.families()
     font_family = StringVar()
