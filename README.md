@@ -10,7 +10,7 @@ Info about **Tkinter**:
   * Tkinter is a Python binding to the Tk GUI toolkit. It is the standard Python interface to the Tk GUI toolkit, and is Python's de facto standard GUI. Tkinter is included with standard Linux, Microsoft Windows and Mac OS X installs of Python. The name Tkinter comes from Tk interface.
 
 The .py file has been converted to .exe by using **PyInstaller**:
-  * link for steps to conver to [.exe](https://www.geeksforgeeks.org/convert-python-script-to-exe-file/).
+  * link for steps to convert to [.exe](https://www.geeksforgeeks.org/convert-python-script-to-exe-file/).
   
 Some of the **Snap Shots** of the application are shared below
 
